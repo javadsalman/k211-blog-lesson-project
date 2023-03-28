@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block main %}
+    {% static 'assets/img/about-bg.jpg' as home_image %}
+    {% include 'includes/banner.html' with banner_title='Login' banner_description='Hurry up to chekout new contents' banner_image=home_image %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-6 bg-light border border-dark p-3">
+                <div class="row">
+                    <div class=""><div class="h2 text-center">Login</div></div>
+                    {% if invalid_credentials %}
+                        <div class="h4 text-danger">Username or password is incorrect</div>
+                    {% endif %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form.as_div}}
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
