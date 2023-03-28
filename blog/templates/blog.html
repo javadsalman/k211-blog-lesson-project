@@ -6,19 +6,39 @@
     {% include 'includes/banner.html' with banner_title='BLOG' banner_description='This is what I do.' banner_image=blog_image %}
       <!-- Main Content-->
       <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-md-12 col-lg-4 col-xl-3">
+                <div class="h3">Authors</div>
+                <ul class="p-0">
+                    {% for author in authors %}
+                        <li><a href="?author={{author.user.username}}">{{author.user.get_full_name}}</a></li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <div class="h3">Tags</div>
+                <ul class="p-0">
+                    {% for tag in tags %}
+                        <li><a href="?tag={{tag.title}}">{{tag.title}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-12 col-lg-8 col-xl-9">
                 {% for article in articles %}
                     <div class="post-preview">
                         <a href="{% url 'blog:article-detail' pk=article.id %}">
                             <h2 class="post-title">{{article.title}}</h2>
                             <h3 class="post-subtitle">{{article.description}}</h3>
                         </a>
-                        <p class="post-meta">
+                        <p class="post-meta mb-1">
                             Posted by
-                            <a href="#!">{{article.author.user.get_full_name}}</a>
+                            <a href="?author={{article.author.user.username}}">{{article.author.user.get_full_name}}</a>
                             on {{article.created}}
                         </p>
+                        <div>
+                            {% for tag in article.tags.all %}
+                                <a href="?tag={{tag.title}}" class="badge bg-secondary rounded">{{tag.title}}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />

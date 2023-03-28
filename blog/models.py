@@ -10,11 +10,18 @@ class Author(models.Model):
     def __str__(self):
         return self.user.username
 
+class Tag(models.Model):
+    title = models.CharField(max_length=10)
+    
+    def __str__(self):
+        return self.title
+
 class Article(models.Model):
     title = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
     content = models.TextField()
     show = models.BooleanField(default=True)
+    tags = models.ManyToManyField(Tag)
     view_count = models.IntegerField()
     main_image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
@@ -22,4 +29,5 @@ class Article(models.Model):
     
     def __str__(self):
         return self.title
+    
     
